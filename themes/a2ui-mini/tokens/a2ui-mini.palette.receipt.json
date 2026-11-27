@@ -3,7 +3,7 @@
   "recipe": "astryx-oklch-v1",
   "generatorVersion": "palette-generator-v1",
   "candidateFormatVersion": "palette-typescript-v1",
-  "candidateSha256": "ab49a9c894705c546ba6ab2ce84fa89758ec167c206fc457d9458b72f3cac31e",
+  "candidateSha256": "07b71a18114733abfea6d3d40c379f7deb71e098b623de268211757b41f7f00b",
   "request": {
     "recipe": "astryx-oklch-v1",
     "vibrancy": 60,
@@ -36,13 +36,13 @@
       {
         "id": "accent",
         "name": "Accent",
-        "seed": "#2f5d46",
+        "seed": "#2f6046",
         "kind": "chromatic",
         "anchors": [
           {
             "mode": "light",
             "stop": 35,
-            "color": "#2f5d46",
+            "color": "#2f6046",
             "policy": "exact"
           }
         ]
@@ -74,9 +74,9 @@
       "accent": {
         "light": {
           "monotonic": true,
-          "minimumAdjacentDeltaE": 4.1789413766169465,
-          "maximumAdjacentDeltaE": 18.512034326959434,
-          "maximumHueDrift": 4.5273493809453385,
+          "minimumAdjacentDeltaE": 4.1556691182447985,
+          "maximumAdjacentDeltaE": 18.517469393664733,
+          "maximumHueDrift": 4.441113465302124,
           "hueIdentityRisk": null,
           "gamutMappedStops": [
             5,
@@ -93,18 +93,18 @@
             {
               "mode": "light",
               "stop": 35,
-              "color": "#2f5d46",
+              "color": "#2f6046",
               "policy": "exact",
-              "generatedColor": "#2f5d46",
+              "generatedColor": "#2f6046",
               "deltaE": 0
             }
           ]
         },
         "dark": {
           "monotonic": true,
-          "minimumAdjacentDeltaE": 4.267950877257066,
-          "maximumAdjacentDeltaE": 18.512034326959434,
-          "maximumHueDrift": 4.724594269502063,
+          "minimumAdjacentDeltaE": 4.267207541146218,
+          "maximumAdjacentDeltaE": 18.517469393664733,
+          "maximumHueDrift": 4.395180114749564,
           "hueIdentityRisk": null,
           "gamutMappedStops": [
             5,

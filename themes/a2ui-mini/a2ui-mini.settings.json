@@ -9,11 +9,6 @@
       "source": "dial"
     },
     {
-      "thing": "accent",
-      "value": "#2f5d46",
-      "source": "dial"
-    },
-    {
       "thing": "neutral",
       "value": "#78736b",
       "source": "dial"
@@ -68,8 +63,13 @@
       "thing": "--color-data-neutral",
       "value": "#a39d93",
       "source": "token"
+    },
+    {
+      "thing": "accent",
+      "value": "#2f6046",
+      "source": "dial"
     }
   ],
-  "palette": "a20236dcf3e47cf0e96e30d6a8d1cf100afd1cd1e1e76c4230e144098ab8c24a",
+  "palette": "98f4fbac7b623ede0e3a3e19cc7c169c3d235631b2bc7b69e27859712dfb3f0a",
   "lifted": []
 }

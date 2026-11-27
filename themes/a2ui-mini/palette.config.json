@@ -5,12 +5,12 @@
     {
       "id": "accent",
       "name": "Accent",
-      "seed": "#2f5d46",
+      "seed": "#2f6046",
       "anchors": [
         {
           "mode": "light",
           "stop": 35,
-          "color": "#2f5d46",
+          "color": "#2f6046",
           "policy": "exact"
         }
       ]
