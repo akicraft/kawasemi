@@ -91,6 +91,7 @@
   - README: 目的、入れ方（`pnpm add github:akicraft/kawasemi#<タグ>`）、読み込み方、テーマの作り方、バージョンの付け方
 - 完了条件: 空の Void プロジェクトに入れて、Claude に「設定画面を作って」と頼むと、`AGENTS.md` を読んで Astryx の部品とトークンで組む
 - 結果（2026-11-27）: `AGENTS.md` と README を書いた。完了条件の「空の Void プロジェクトで試す」はまだ（タグがなく `github:` で入れられないため。v0.1.0 のあとに本人が試す）。spec の「`astryx how <部品名>` で引く」は、0.7.16 の CLI に `how` がなかったので `astryx search` と `astryx component <部品名>` に直した（`how` はテーマエディタの中にだけある）。アプリ側には CLI がないことが多いので、`@astryxdesign/cli` を devDependencies に入れるよう書いた
+- 追記（2026-11-28）: 完了条件を確かめた。`void init`（React・静的ページの starter）で作った空のアプリに README の手順で入れ、`CLAUDE.md` に「UI は `node_modules/kawasemi/AGENTS.md` に従う。」の1行だけを足して、別セッションの Claude に「設定画面を作って」と頼んだ。AGENTS.md どおり、Tailwind の入口とテーマの CSS、`InternationalizationProvider`（ja-JP）と `<Theme mode>` を組み込み、画面は Astryx の部品とトークンのクラスだけで組んだ（色や px の直接指定なし）。ブラウザで、保存でダークに切り替わり通知が出ることを確かめた（akicraft/playground の `experiments/20261128-kawasemi-void`）。README の手順に2つ抜けがあったので直した: Astryx のインストール時スクリプトを `allowBuilds` で止める設定がないと pnpm がインストールを止めること、Tailwind の Vite プラグインを `vite.config.ts` に足すこと
 
 ## K10. v0.1.0 を出し、a2ui-mini で使う
 

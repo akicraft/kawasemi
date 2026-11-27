@@ -19,13 +19,35 @@
 
 Git のタグを指定して入れる（npm には公開していない）。
 
+先に、`pnpm-workspace.yaml` で Astryx のインストール時スクリプトを走らせない設定を書く。中身は「`astryx init` を実行して」と表示するだけで、pnpm は許可の有無を決めていないスクリプトがあるとインストールを止める（`astryx init` は使わない。下の「エージェントに使わせる」）。
+
+```yaml
+# pnpm-workspace.yaml
+allowBuilds:
+  "@astryxdesign/core": false
+  "@astryxdesign/cli": false
+```
+
 ```sh
 pnpm add github:akicraft/kawasemi#v0.1.0
 pnpm add @astryxdesign/core@~0.7.16 @astryxdesign/theme-neutral@~0.7.16 @stylexjs/stylex react react-dom
 pnpm add -D @astryxdesign/cli@~0.7.16   # 部品の使い方を引く CLI（エージェントが使う）
 ```
 
-Tailwind を使うときは `tailwindcss` と `@tailwindcss/vite` も入れる（v4.3 以上）。
+Tailwind を使うときは `tailwindcss` と `@tailwindcss/vite` も入れ（v4.3 以上）、`vite.config.ts` の `plugins` に足す。
+
+```sh
+pnpm add -D tailwindcss @tailwindcss/vite
+```
+
+```ts
+// vite.config.ts
+import tailwindcss from "@tailwindcss/vite";
+
+export default defineConfig({
+	plugins: [tailwindcss() /* , ほかのプラグイン */],
+});
+```
 
 ## 読み込み方
 
