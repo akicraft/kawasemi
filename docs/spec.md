@@ -93,7 +93,10 @@ akicraft/playground の `docs/tech-stack-muzaru.md` に合わせる。kawasemi �
 
 - `AGENTS.md` をパッケージに同梱する。書く内容:
   - テーマの読み込み方（どの CSS を import するか）
-  - まず Astryx の部品を使う。部品の使い方は写さず `astryx how <部品名>` で引く
+  - まず Astryx の部品を使う。部品の使い方は写さず `astryx search <やりたいこと>` と `astryx component <部品名>` で引く（K9 で、0.7.16 の CLI に `how` がないことが分かり直した）
+  - Astryx の日本語の文言を出す（`InternationalizationProvider locale="ja-JP"` と `@astryxdesign/core/locales/ja-JP.generated.js`）
+  - Tailwind では既定の色が消してあり、トークンの名前で書く
+  - ダークモードの切り替え方（`<Theme mode>`）
   - 色・余白・角丸は直接書かず、トークンか Tailwind のクラスを使う
   - フォントの読み込みは書かない（kawasemi が入れる）
   - 自作部品の決まり

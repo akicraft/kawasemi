@@ -90,6 +90,7 @@
   - `AGENTS.md`（spec.md の「エージェント向けの説明書」の内容）。`package.json` の `files` に含める
   - README: 目的、入れ方（`pnpm add github:akicraft/kawasemi#<タグ>`）、読み込み方、テーマの作り方、バージョンの付け方
 - 完了条件: 空の Void プロジェクトに入れて、Claude に「設定画面を作って」と頼むと、`AGENTS.md` を読んで Astryx の部品とトークンで組む
+- 結果（2026-11-27）: `AGENTS.md` と README を書いた。完了条件の「空の Void プロジェクトで試す」はまだ（タグがなく `github:` で入れられないため。v0.1.0 のあとに本人が試す）。spec の「`astryx how <部品名>` で引く」は、0.7.16 の CLI に `how` がなかったので `astryx search` と `astryx component <部品名>` に直した（`how` はテーマエディタの中にだけある）。アプリ側には CLI がないことが多いので、`@astryxdesign/cli` を devDependencies に入れるよう書いた
 
 ## K10. v0.1.0 を出し、a2ui-mini で使う
 
