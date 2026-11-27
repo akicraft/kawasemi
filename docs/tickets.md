@@ -101,3 +101,4 @@
   - a2ui-mini の中に、kawasemi のトークンを `--a2ui-*` に写す CSS を書く（spec.md の「A2UI」）
   - a2ui-mini の `globals.css` の独自の色指定をやめる
 - 完了条件: a2ui-mini の予約フォームが kawasemi（深い緑）の見た目で表示され、ライト／ダークも切り替わる
+- 結果（2026-11-28）: 完了。`v0.1.0` のタグを push し、a2ui-mini（akicraft/playground の `a2ui-mini` ブランチ、b82c9c6）に入れた。予約フォーム → 予約 → 確認のカードまで、ライト／ダークの両方で深い緑の見た目になることを確かめた。`--a2ui-*` に写す CSS は a2ui-mini の `app/a2ui-kawasemi.css`。分かったこと: A2UI は Shadow DOM を使わないので、Astryx のリセットが A2UI の中の `<p>` に本文の色を付け、ボタンの白い文字が暗くなる（`color: inherit` で直した）。`kawasemi/a2ui.css` に移すときもこの対策を入れる
