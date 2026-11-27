@@ -310,6 +310,13 @@ function WithTailwind() {
 			<Text type="supporting" display="block">
 				左が Astryx の部品、右が Tailwind のクラスだけで書いたもの。
 			</Text>
+			<p className="text-supporting text-secondary">
+				Tailwind の dark: 修飾子:{" "}
+				<span className="font-medium text-primary dark:hidden">ライト</span>
+				<span className="hidden font-medium text-primary dark:inline">
+					ダーク
+				</span>
+			</p>
 			<HStack gap={4} vAlign="stretch">
 				<Card width={320}>
 					<VStack gap={2}>

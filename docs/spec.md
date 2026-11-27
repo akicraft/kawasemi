@@ -57,7 +57,8 @@ akicraft/playground の `docs/tech-stack-muzaru.md` に合わせる。kawasemi �
 ### ダークモード
 
 - OS の設定（`prefers-color-scheme`）に連動するのが基本
-- `<html data-color-scheme="light|dark">` で強制的に上書きできるよう、テーマと Tailwind 用の CSS の両方で受ける
+- 上書きは Astryx のしくみにそろえる。`<Theme mode="light|dark|system">` が `<html data-theme="light|dark">` を付け外しし、テーマの CSS はこの属性で色を切り替える（K5 で決めた。独自の `data-color-scheme` は作らない）。SSR では `<html data-theme="dark">` を直接書いてもよい
+- Tailwind の色のクラスはトークンを参照しているので、そのまま切り替わる。`dark:` 修飾子は `kawasemi/tailwind.css` の `@custom-variant` で、`data-theme` があればそれに、なければ OS の設定に従う
 - 切り替えボタンの部品は作らない（必要になったら自作部品の決まりで足す）
 
 ### Tailwind

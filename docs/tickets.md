@@ -52,6 +52,7 @@
   - `data-color-scheme="light|dark"` で OS の設定を上書きできるよう、テーマと `tailwind.css` の両方で受ける
   - 見本ページに「OS に従う／ライト／ダーク」の切り替えを付ける（見本ページ専用。部品としては配らない）
 - 完了条件: OS がライトのままでも、属性で Astryx の部品と Tailwind の部分の両方がダークになる
+- 結果（2026-11-27）: 完了。独自の `data-color-scheme` はやめ、Astryx の `<Theme mode>` が付ける `html[data-theme]` にそろえた（テーマの CSS はもともとこの属性で切り替わる）。`dist/tailwind.css` に `@custom-variant dark` を足し、`dark:` が `data-theme` と OS の設定の両方に従うようにした。切り替えは K3 で付けた見本ページの `SegmentedControl` と `?mode=` をそのまま使う。OS がライト／ダーク × `?mode=` なし／light／dark／system の8通りで、Astryx のボタン・Tailwind のカードの背景・`dark:` の表示が、どれも期待どおりに切り替わることを確かめた
 
 ## K6. a2ui-mini 用のテーマを作る
 

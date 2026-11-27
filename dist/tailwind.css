@@ -22,3 +22,19 @@
 @import "./tailwind-text.css";
 @import "tailwindcss/utilities.css" layer(utilities);
 
+/*
+ * dark: 修飾子。Astryx の <Theme mode> が <html data-theme="light|dark"> を付けるので、
+ * それに従う。属性がないとき（mode="system"）は OS の設定（prefers-color-scheme）に従う。
+ * 色はトークンが自動で切り替わるので、dark: は色以外（画像の差し替えなど）に使う。
+ */
+@custom-variant dark {
+	&:where([data-theme="dark"], [data-theme="dark"] *) {
+		@slot;
+	}
+	@media (prefers-color-scheme: dark) {
+		&:where(:not([data-theme="light"], [data-theme="light"] *)) {
+			@slot;
+		}
+	}
+}
+
