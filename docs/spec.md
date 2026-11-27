@@ -1,0 +1,160 @@
+# kawasemi 仕様
+
+個人開発で使い回すデザインシステム。Meta の Astryx をベースに、テーマ（トークン）を中心に持つ。
+
+- 作成日: 2026-11-27
+- 状態: 合意済み・K1 実施中
+- リポジトリ: `akicraft/kawasemi`
+
+## 背景
+
+A2UI の試作（akicraft/playground の `experiments/20261126-a2ui-mini`）で、エージェントが組んだ画面の見た目はクライアント側のデザインシステムで決まると分かった。
+試作ごとに見た目を作るのではなく、今後の個人開発すべてで使える土台を1つ持ちたい。
+11/16 に Astryx を試して作った自作テーマ Kawasemi（`claude/practical-wozniak-nj17m4` の `experiments/20261116-astryx-try`）を出発点にする。
+
+## 前提にする技術スタック
+
+akicraft/playground の `docs/tech-stack-muzaru.md` に合わせる。kawasemi に関係するもの:
+
+| 分類 | 技術 |
+|---|---|
+| 使う側のアプリ | Void（Vite プラグイン＋CLI、React）、Cloudflare Workers |
+| CSS・UI | Tailwind CSS v4 / React Aria・Astryx |
+| 開発ツール | pnpm・Biome・mise、TypeScript |
+| テスト | Vitest・Playwright |
+
+## 方針
+
+### 中身と範囲
+
+- kawasemi が持つのは **Astryx のテーマ** が中心。部品は Astryx のものをアプリがそのまま使う
+- Astryx を包み直した独自の部品集にはしない（エージェントが Astryx の CLI で部品を正しく引ける強みを残すため）
+- 自作部品は必要になったものだけ足す（下の「自作部品の決まり」）
+
+### テーマの構成
+
+- **土台は共通、アクセント色だけプロジェクトごとに変える**
+- 土台のテーマ `kawasemi` は 11/16 の Kawasemi の設定を引き継ぐ
+
+  | 項目 | 設定 |
+  |---|---|
+  | アクセント色 | `#1670a8`（土台の既定。プロジェクトごとに変える） |
+  | グレー系 | `#78736b` |
+  | フォント | Noto Sans JP |
+  | 角丸 | **small か medium**（large から変更。実装の最初に PNG で見比べて決める） |
+  | 面 | outlined |
+  | 見出し | heavy |
+  | ボタン | solid |
+  | グラフの色 | `--color-data-*` を Kawasemi の設定どおり上書き |
+
+- プロジェクトごとのテーマは **kawasemi のリポジトリで** テーマエディタを使って作る
+  （`astryx experimental theme editor new <名前> --like kawasemi --accent <色>`）。
+  CSS 変数の上書きだけでは、ホバー・薄い背景・ダークモードの色とコントラストの確認が漏れるため
+- 最初のリリースに入れるテーマ:
+  - `kawasemi`（土台。アクセントはカワセミの青）
+  - `a2ui-mini`（アクセントは製本クロスのような深い緑。具体的な色は作るときにコントラストの確認を通して決める）
+
+### ダークモード
+
+- OS の設定（`prefers-color-scheme`）に連動するのが基本
+- `<html data-color-scheme="light|dark">` で強制的に上書きできるよう、テーマと Tailwind 用の CSS の両方で受ける
+- 切り替えボタンの部品は作らない（必要になったら自作部品の決まりで足す）
+
+### Tailwind
+
+- Tailwind v4 用の CSS（`kawasemi/tailwind.css`）を同梱する
+- `@theme` で Astryx のトークン（CSS 変数）を `var(--…)` で参照する。値を2か所に書かない
+- プロジェクトごとのテーマやダークモードの切り替えが、Tailwind のクラス（`bg-accent` など）にも自動で反映されること
+
+### フォント
+
+- `@fontsource-variable/noto-sans-jp` を kawasemi の dependencies に入れ、kawasemi の CSS を読み込めばフォントも入るようにする
+- 外部（Google Fonts）には取りに行かない
+
+### エージェント向けの説明書
+
+- `AGENTS.md` をパッケージに同梱する。書く内容:
+  - テーマの読み込み方（どの CSS を import するか）
+  - まず Astryx の部品を使う。部品の使い方は写さず `astryx how <部品名>` で引く
+  - 色・余白・角丸は直接書かず、トークンか Tailwind のクラスを使う
+  - フォントの読み込みは書かない（kawasemi が入れる）
+  - 自作部品の決まり
+- 各プロジェクトの CLAUDE.md には「UI は `node_modules/kawasemi/AGENTS.md` に従う」の1行だけ足す
+- `astryx init`（CLAUDE.md に部品一覧を書き込む）は使わない
+
+### 自作部品の決まり
+
+1. まず Astryx の部品の組み合わせで作る
+2. Astryx にない動きだけ React Aria で作る
+3. 見た目はどちらもトークン（Tailwind のクラスか CSS 変数）だけで付ける
+4. 2つ以上のプロジェクトで使ったものだけ kawasemi に入れる。それまでは各プロジェクトに置く
+
+### A2UI
+
+- kawasemi のトークンを `--a2ui-*` に写す CSS は、当面 a2ui-mini の中に置く
+- A2UI を使うプロジェクトが2つ目になったら `kawasemi/a2ui.css` として移す
+- A2UI の部品を Astryx の部品で描くカタログは作らない（本気で A2UI を使うプロダクトが出てから考える）
+
+## 配布
+
+- 公開リポジトリ、MIT ライセンス（Astryx は MIT、Noto Sans JP は SIL OFL）
+- 各プロジェクトには Git から入れる: `pnpm add github:akicraft/kawasemi#v0.1.0`
+- バージョンは Git のタグ（semver）。アプリはタグで固定する
+  - 色の調整は patch、トークンの追加は minor
+  - 0.x の間は、トークン名の変更や Astryx の範囲を上げる変更も minor を上げて区別する
+- Git から入れるパッケージは pnpm がビルドスクリプトを走らせないので、**生成物はコミットして配る**
+  （`astryx theme add` が出すテーマの CSS / JS、自作部品をビルドした JS と型定義）
+- 依存の持ち方:
+
+  | パッケージ | 種類 | 理由 |
+  |---|---|---|
+  | `@astryxdesign/core` | peerDependencies（狭い範囲、例: `~0.7.17`） | アプリが直接 import する。アプリの中で1つに保つ |
+  | `@fontsource-variable/noto-sans-jp` | dependencies | アプリは直接触らない |
+  | `@astryxdesign/cli` / `build` | devDependencies | テーマを作るときだけ使う |
+
+- Astryx を上げるときは、見本ページの比較を通してから peerDependencies の範囲を広げる
+- 依存はどれも npm の7日ルールに沿って、公開から7日以上たった版を入れる
+
+## 確認
+
+- **見本ページ**: リポジトリ内に Vite＋React の小さなページを置く。使う側と同じ読み込み方（テーマ・Tailwind 用の CSS・フォント）で、Astryx の主な部品と Tailwind のクラスを並べる。テーマとライト／ダークを切り替えられる
+- **スクリーンショット比較**: Playwright で「テーマ × ライト／ダーク」ごとに撮って前回と比べる
+- **テーマを作るとき**: テーマエディタのコントラストの確認と `show --png` の見本画像
+- **GitHub Actions**: プルリクエストごとに Biome・型チェック・スクリーンショット比較を回す。
+  基準画像は Linux（GitHub Actions）で作ってコミットし、更新は手動で動かす専用のワークフローで撮り直す
+
+## リポジトリの構成（案）
+
+```
+kawasemi/
+├── AGENTS.md              # 使う側のエージェント向け説明書（パッケージに同梱）
+├── CLAUDE.md              # kawasemi 自体を開発するときのルール
+├── README.md
+├── LICENSE                # MIT
+├── package.json           # exports: ./tailwind.css, ./themes/*.css, ./fonts.css など
+├── mise.toml              # node / pnpm のバージョン固定
+├── biome.json
+├── themes/                # テーマエディタが管理する設定と見本画像（手で編集しない）
+│   ├── kawasemi/
+│   └── a2ui-mini/
+├── dist/                  # 配布物（コミットする）
+│   ├── themes/kawasemi.css
+│   ├── themes/a2ui-mini.css
+│   └── tailwind.css
+├── preview/               # 見本ページ（Vite＋React）
+└── tests/                 # Playwright のスクリーンショット比較
+```
+
+## 決めていないこと（実装中に決める）
+
+- 角丸を small と medium のどちらにするか（最初のチケットで見比べる）
+- a2ui-mini 用の深い緑の具体的な色
+- `package.json` の `exports` の細かい名前
+
+## やらないこと
+
+- Astryx を包み直した独自の部品集
+- Storybook
+- npm への公開（人に使ってもらいたくなったら考える）
+- A2UI の部品を Astryx で描くカタログ
+- ダークモードの切り替えボタンの部品

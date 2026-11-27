@@ -1,0 +1,5 @@
+# インストール時のスクリプトの扱い
+# Astryx の postinstall は「astryx init を実行して」と表示するだけ。kawasemi では init を使わないので走らせない
+allowBuilds:
+  "@astryxdesign/cli": false
+  "@astryxdesign/core": false

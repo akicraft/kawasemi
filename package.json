@@ -1,0 +1,32 @@
+{
+	"name": "kawasemi",
+	"version": "0.0.0",
+	"description": "Astryx をベースにした個人開発用のデザインシステム（テーマ中心）",
+	"license": "MIT",
+	"type": "module",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/akicraft/kawasemi.git"
+	},
+	"files": [
+		"dist",
+		"AGENTS.md"
+	],
+	"scripts": {
+		"check": "biome check .",
+		"format": "biome check --write ."
+	},
+	"peerDependencies": {
+		"@astryxdesign/core": "~0.7.16"
+	},
+	"devDependencies": {
+		"@astryxdesign/build": "0.7.16",
+		"@astryxdesign/cli": "0.7.16",
+		"@astryxdesign/core": "0.7.16",
+		"@biomejs/biome": "2.6.8"
+	},
+	"packageManager": "pnpm@12.11.0",
+	"engines": {
+		"node": ">=24.22"
+	}
+}

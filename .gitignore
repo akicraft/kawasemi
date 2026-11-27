@@ -1,0 +1,6 @@
+node_modules/
+.DS_Store
+*.log
+# Playwright の作業用（基準画像は tests/ の中にコミットする）
+test-results/
+playwright-report/
