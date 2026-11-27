@@ -7,8 +7,10 @@
  * - kawasemi/base.css（Astryx の CSS とフォント）もここで読み込むので、別に読み込まなくてよい
  * - ユーティリティの値は Astryx のトークン（CSS 変数）を参照する。テーマやダークモードを
  *   切り替えると、Tailwind のクラスにもそのまま反映される
- * - Tailwind 既定の色（bg-blue-500 など）は消してある。色は bg-surface・text-primary・
- *   border-default・bg-accent などトークンの名前で書く
+ * - Tailwind 既定の色（bg-blue-500 など）は消してある。色は bg-card・text-primary・
+ *   border-border・bg-accent-bg などトークンの名前で書く
+ * - 文字の大きさは Astryx の段（text-base が 14px、text-sm が 12px）。見出しなどは
+ *   text-heading-3・text-label・text-supporting のように役割の名前でも書ける
  */
 @layer reset, theme, base, astryx-base, astryx-theme, components, utilities;
 
@@ -17,5 +19,6 @@
 @import "tailwindcss/preflight.css" layer(base);
 @import "./base.css";
 @import "@astryxdesign/core/tailwind-theme.css";
+@import "./tailwind-text.css";
 @import "tailwindcss/utilities.css" layer(utilities);
 

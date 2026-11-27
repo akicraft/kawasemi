@@ -43,6 +43,7 @@
   - `dist/tailwind.css` に Tailwind v4 の `@theme` を書き、Astryx のトークンを `var(--…)` で参照する（色・文字・余白・角丸）
   - 見本ページに Tailwind のクラスで書いた部分を足し、Astryx の部品と並べる
 - 完了条件: 見本ページで、Tailwind で書いた部分と Astryx の部品の色・角丸・文字がそろっている
+- 結果（2026-11-27）: 完了。ライト／ダークのスクリーンショットと計算後のスタイルで比べ、色・角丸・字体はそろっていた。ずれていたのは文字で、Astryx の `tailwind-theme.css` は `text-sm` などの大きさしか Astryx に向けず、行の高さは Tailwind の既定のままだった。`dist/tailwind-text.css` を足し、大きさの段ごとの行の高さを Astryx にそろえ、`text-heading-3`・`text-label`・`text-supporting` など役割の名前で大きさ・行の高さ・太さをまとめて付けられるようにした。見本ページのクラス名も、Astryx の大きさの段（`text-base` が 14px、`text-sm` が 12px）に合わせて直した。残る差はカードの内側の余白の 1px（Astryx は枠線の分を引いて 11px、Tailwind の `p-3` は 12px）で、そのままにした
 
 ## K5. ダークモードの上書きを受ける
 

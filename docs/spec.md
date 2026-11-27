@@ -64,7 +64,9 @@ akicraft/playground の `docs/tech-stack-muzaru.md` に合わせる。kawasemi �
 
 - Tailwind v4 用の CSS（`kawasemi/tailwind.css`）を同梱する
 - `@theme` で Astryx のトークン（CSS 変数）を `var(--…)` で参照する。値を2か所に書かない
-- プロジェクトごとのテーマやダークモードの切り替えが、Tailwind のクラス（`bg-accent` など）にも自動で反映されること
+- プロジェクトごとのテーマやダークモードの切り替えが、Tailwind のクラス（`bg-accent-bg` など）にも自動で反映されること
+- 色・余白・角丸・大きさの段は Astryx 同梱の `@astryxdesign/core/tailwind-theme.css` をそのまま使い、Tailwind 既定の色は消す（`bg-blue-500` などは使えない）
+- 文字の大きさは Astryx の段に従う（`text-base` が 14px、`text-sm` が 12px で、Tailwind の既定と1段ずれる）。行の高さも Astryx にそろえ、`text-heading-1`〜`6`・`text-large`・`text-label`・`text-supporting` の役割の名前でも書ける（K4 で `dist/tailwind-text.css` に足した）
 
 ### フォント
 
