@@ -9,3 +9,4 @@ playwright-report/
 preview/dist/
 # テーマエディタが毎回作り直す見本ページ（大きいので入れない）
 themes/*/preview.html
+themes/*/sheet.html

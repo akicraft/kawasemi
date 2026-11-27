@@ -1,3 +1,5 @@
 /* 使う側と同じ読み込み方: Tailwind 用の入口（土台を含む） → テーマ */
+/* 見本ページはテーマを切り替えるので2つとも読み込む。アプリでは使うテーマの1つだけでよい */
 @import "kawasemi/tailwind.css";
 @import "kawasemi/themes/kawasemi.css";
+@import "kawasemi/themes/a2ui-mini.css";
