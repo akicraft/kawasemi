@@ -23,6 +23,9 @@ pnpm build     # src/themes/（エディタの生成物）を dist/themes/ に�
 pnpm check     # Biome
 pnpm format    # Biome で整形
 pnpm --filter kawasemi-preview dev   # 見本ページ（http://localhost:5199）
+pnpm typecheck # 見本ページの型チェック
+pnpm test      # スクリーンショット比較（テーマ × ライト／ダーク）
+pnpm test:update   # 基準画像を撮り直す（コミットするのは Linux の画像だけ）
 ```
 
 ## 開発環境のメモ

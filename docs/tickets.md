@@ -72,6 +72,7 @@
   - Playwright で「テーマ（2つ）× ライト／ダーク」の4枚を撮って比べるテストを書く
   - 手元（Mac）で回せるようにする（基準画像は K8 で Linux のものに置き換える）
 - 完了条件: `pnpm test` で4枚の比較が通り、テーマの色を1つ変えると失敗する
+- 結果（2026-11-27）: 完了。`tests/screenshots.spec.ts` が見本ページを `?theme=` と `?mode=` で開いて全体を撮る（OS の設定はライトに固定し、ダークは `data-theme` で切り替える）。`playwright.config.ts` の `webServer` で見本ページをビルドして `vite preview` で出す。基準画像は `tests/screenshots/<テーマ>-<モード>-<OS>.png`。色の差の許容は 0 にした（既定の 0.2 や 0.02 では、エディタで a2ui-mini のアクセントを `#2f5d46` → `#2f6046` にしても通った。0 では a2ui-mini の2枚が約 15,000 画素の差で落ち、戻すと通った）。同じ環境で3回続けて回して安定していた。今コミットした基準画像はこの作業環境（Linux、Playwright 1.63 付属の Chromium）で撮ったもので、K8 の手動ワークフローで GitHub Actions の Linux のものに撮り直す。Playwright の版と合うブラウザがない環境では `PW_CHROMIUM_PATH` でブラウザの場所を渡せる。Mac では基準画像がないので、手元で回すときは `pnpm test:update` で `-darwin` の画像を作る（コミットはしない）
 
 ## K8. GitHub Actions で確認を回す
 

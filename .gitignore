@@ -3,6 +3,9 @@ node_modules/
 *.log
 # Playwright の作業用（基準画像は tests/ の中にコミットする）
 test-results/
+# 基準画像は GitHub Actions の Linux のものだけをコミットする
+tests/screenshots/*-darwin.png
+tests/screenshots/*-win32.png
 playwright-report/
 .pnpm-store/
 .playwright/
