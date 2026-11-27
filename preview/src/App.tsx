@@ -110,6 +110,8 @@ export function App() {
 						<Status />
 						<Divider />
 						<Bookings />
+						<Divider />
+						<WithTailwind />
 					</VStack>
 				</Section>
 			</Theme>
@@ -295,6 +297,47 @@ function Bookings() {
 						<Text type="supporting">ランチ 6席・ディナー 2席</Text>
 					</VStack>
 				</Card>
+			</HStack>
+		</VStack>
+	);
+}
+
+// Tailwind のクラスだけで書いた部分。左の Astryx の部品と、色・角丸・文字がそろうことを確かめる
+function WithTailwind() {
+	return (
+		<VStack gap={3}>
+			<Heading level={2}>Tailwind で書いた部分</Heading>
+			<Text type="supporting" display="block">
+				左が Astryx の部品、右が Tailwind のクラスだけで書いたもの。
+			</Text>
+			<HStack gap={4} vAlign="stretch">
+				<Card width={320}>
+					<VStack gap={2}>
+						<Heading level={3}>山田 花子 さま</Heading>
+						<Text type="supporting">12/3（水）18:00・2名</Text>
+						<HStack gap={2}>
+							<Button size="sm" variant="primary" label="確定する" />
+							<Badge variant="success" label="確定" />
+						</HStack>
+					</VStack>
+				</Card>
+				<div className="flex w-80 flex-col gap-2 rounded-lg border border-border bg-card p-4">
+					<h3 className="font-heading text-lg font-bold text-primary">
+						山田 花子 さま
+					</h3>
+					<p className="text-sm text-secondary">12/3（水）18:00・2名</p>
+					<div className="flex items-center gap-2">
+						<button
+							type="button"
+							className="rounded-md bg-accent-bg px-3 py-1 text-sm font-medium text-on-accent"
+						>
+							確定する
+						</button>
+						<span className="rounded-full bg-success px-2 text-xs font-medium text-on-success">
+							確定
+						</span>
+					</div>
+				</div>
 			</HStack>
 		</VStack>
 	);

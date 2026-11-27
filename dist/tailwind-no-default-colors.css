@@ -1,0 +1,4 @@
+/* kawasemi/tailwind.css から読み込む。Tailwind 既定の色を消し、Astryx のトークンの色だけを残す */
+@theme {
+	--color-*: initial;
+}

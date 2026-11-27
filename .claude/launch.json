@@ -1,11 +1,11 @@
 {
-  "version": "0.0.1",
-  "configurations": [
-    {
-      "name": "preview",
-      "runtimeExecutable": "sh",
-      "runtimeArgs": ["-c", "cd preview && ./node_modules/.bin/vite"],
-      "port": 5199
-    }
-  ]
+	"version": "0.0.1",
+	"configurations": [
+		{
+			"name": "preview",
+			"runtimeExecutable": "sh",
+			"runtimeArgs": ["-c", "cd preview && ./node_modules/.bin/vite"],
+			"port": 5199
+		}
+	]
 }

@@ -14,6 +14,7 @@
 	],
 	"exports": {
 		"./base.css": "./dist/base.css",
+		"./tailwind.css": "./dist/tailwind.css",
 		"./themes/*.css": "./dist/themes/*/*.css",
 		"./themes/*": {
 			"types": "./dist/themes/*/*.d.ts",
@@ -32,7 +33,13 @@
 	},
 	"peerDependencies": {
 		"@astryxdesign/core": "~0.7.16",
-		"@astryxdesign/theme-neutral": "~0.7.16"
+		"@astryxdesign/theme-neutral": "~0.7.16",
+		"tailwindcss": "^4.3"
+	},
+	"peerDependenciesMeta": {
+		"tailwindcss": {
+			"optional": true
+		}
 	},
 	"devDependencies": {
 		"@astryxdesign/build": "0.7.16",
@@ -40,7 +47,8 @@
 		"@astryxdesign/core": "0.7.16",
 		"@astryxdesign/theme-neutral": "0.7.16",
 		"@biomejs/biome": "2.6.8",
-		"@playwright/test": "1.65.1"
+		"@playwright/test": "1.65.1",
+		"tailwindcss": "4.3.5"
 	},
 	"packageManager": "pnpm@12.11.0",
 	"engines": {

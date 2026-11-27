@@ -1,0 +1,21 @@
+/*
+ * Tailwind CSS v4 用。アプリの CSS で `@import "tailwindcss";` の代わりに読み込む。
+ *
+ *   @import "kawasemi/tailwind.css";
+ *   @import "kawasemi/themes/kawasemi.css";
+ *
+ * - kawasemi/base.css（Astryx の CSS とフォント）もここで読み込むので、別に読み込まなくてよい
+ * - ユーティリティの値は Astryx のトークン（CSS 変数）を参照する。テーマやダークモードを
+ *   切り替えると、Tailwind のクラスにもそのまま反映される
+ * - Tailwind 既定の色（bg-blue-500 など）は消してある。色は bg-surface・text-primary・
+ *   border-default・bg-accent などトークンの名前で書く
+ */
+@layer reset, theme, base, astryx-base, astryx-theme, components, utilities;
+
+@import "tailwindcss/theme.css" layer(theme);
+@import "./tailwind-no-default-colors.css";
+@import "tailwindcss/preflight.css" layer(base);
+@import "./base.css";
+@import "@astryxdesign/core/tailwind-theme.css";
+@import "tailwindcss/utilities.css" layer(utilities);
+
