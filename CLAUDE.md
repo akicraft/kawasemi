@@ -2,7 +2,7 @@
 
 Astryx をベースにした個人開発用のデザインシステム。仕様は [docs/spec.md](docs/spec.md)、作業の順番は [docs/tickets.md](docs/tickets.md)。
 
-このファイルは kawasemi 自体を開発するときのもの。kawasemi を**使う側**のエージェント向けの説明は `AGENTS.md`（K9 で書く）。
+このファイルは kawasemi 自体を開発するときのもの。kawasemi を**使う側**のエージェント向けの説明は [AGENTS.md](AGENTS.md)（パッケージに同梱される。読み込み方やクラス名を変えたら、こちらも直す）。
 
 ## 守ること
 
