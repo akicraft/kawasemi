@@ -1,6 +1,6 @@
 {
 	"name": "kawasemi",
-	"version": "0.0.0",
+	"version": "0.1.0",
 	"description": "Astryx をベースにした個人開発用のデザインシステム（テーマ中心）",
 	"license": "MIT",
 	"type": "module",
