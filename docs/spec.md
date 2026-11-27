@@ -3,7 +3,7 @@
 個人開発で使い回すデザインシステム。Meta の Astryx をベースに、テーマ（トークン）を中心に持つ。
 
 - 作成日: 2026-11-27
-- 状態: 合意済み・K1 実施中
+- 状態: 合意済み・K3 から実施
 - リポジトリ: `akicraft/kawasemi`
 
 ## 背景
@@ -16,12 +16,12 @@ A2UI の試作（akicraft/playground の `experiments/20261126-a2ui-mini`）で�
 
 akicraft/playground の `docs/tech-stack-muzaru.md` に合わせる。kawasemi に関係するもの:
 
-| 分類 | 技術 |
-|---|---|
+| 分類           | 技術                                                    |
+| -------------- | ------------------------------------------------------- |
 | 使う側のアプリ | Void（Vite プラグイン＋CLI、React）、Cloudflare Workers |
-| CSS・UI | Tailwind CSS v4 / React Aria・Astryx |
-| 開発ツール | pnpm・Biome・mise、TypeScript |
-| テスト | Vitest・Playwright |
+| CSS・UI        | Tailwind CSS v4 / React Aria・Astryx                    |
+| 開発ツール     | pnpm・Biome・mise、TypeScript                           |
+| テスト         | Vitest・Playwright                                      |
 
 ## 方針
 
@@ -36,16 +36,16 @@ akicraft/playground の `docs/tech-stack-muzaru.md` に合わせる。kawasemi �
 - **土台は共通、アクセント色だけプロジェクトごとに変える**
 - 土台のテーマ `kawasemi` は 11/16 の Kawasemi の設定を引き継ぐ
 
-  | 項目 | 設定 |
-  |---|---|
-  | アクセント色 | `#1670a8`（土台の既定。プロジェクトごとに変える） |
-  | グレー系 | `#78736b` |
-  | フォント | Noto Sans JP |
-  | 角丸 | **small か medium**（large から変更。実装の最初に PNG で見比べて決める） |
-  | 面 | outlined |
-  | 見出し | heavy |
-  | ボタン | solid |
-  | グラフの色 | `--color-data-*` を Kawasemi の設定どおり上書き |
+  | 項目         | 設定                                                                          |
+  | ------------ | ----------------------------------------------------------------------------- |
+  | アクセント色 | `#1670a8`（土台の既定。プロジェクトごとに変える）                             |
+  | グレー系     | `#78736b`                                                                     |
+  | フォント     | Noto Sans JP                                                                  |
+  | 角丸         | small（部品 8px・カード 10px。large から変更。K2 で medium と見比べて決めた） |
+  | 面           | outlined                                                                      |
+  | 見出し       | heavy                                                                         |
+  | ボタン       | solid                                                                         |
+  | グラフの色   | `--color-data-*` を Kawasemi の設定どおり上書き                               |
 
 - プロジェクトごとのテーマは **kawasemi のリポジトリで** テーマエディタを使って作る
   （`astryx experimental theme editor new <名前> --like kawasemi --accent <色>`）。
@@ -106,11 +106,11 @@ akicraft/playground の `docs/tech-stack-muzaru.md` に合わせる。kawasemi �
   （`astryx theme add` が出すテーマの CSS / JS、自作部品をビルドした JS と型定義）
 - 依存の持ち方:
 
-  | パッケージ | 種類 | 理由 |
-  |---|---|---|
-  | `@astryxdesign/core` | peerDependencies（狭い範囲、例: `~0.7.17`） | アプリが直接 import する。アプリの中で1つに保つ |
-  | `@fontsource-variable/noto-sans-jp` | dependencies | アプリは直接触らない |
-  | `@astryxdesign/cli` / `build` | devDependencies | テーマを作るときだけ使う |
+  | パッケージ                                      | 種類                                        | 理由                                                                   |
+  | ----------------------------------------------- | ------------------------------------------- | ---------------------------------------------------------------------- |
+  | `@astryxdesign/core`                            | peerDependencies（狭い範囲、例: `~0.7.17`） | アプリが直接 import する。アプリの中で1つに保つ                        |
+  | `@fontsource-variable/noto-sans-jp`             | dependencies                                | アプリは直接触らない                                                   |
+  | `@astryxdesign/cli` / `build` / `theme-neutral` | devDependencies                             | テーマを作るときだけ使う（`theme-neutral` は `--like neutral` の土台） |
 
 - Astryx を上げるときは、見本ページの比較を通してから peerDependencies の範囲を広げる
 - 依存はどれも npm の7日ルールに沿って、公開から7日以上たった版を入れる
@@ -147,7 +147,6 @@ kawasemi/
 
 ## 決めていないこと（実装中に決める）
 
-- 角丸を small と medium のどちらにするか（最初のチケットで見比べる）
 - a2ui-mini 用の深い緑の具体的な色
 - `package.json` の `exports` の細かい名前
 

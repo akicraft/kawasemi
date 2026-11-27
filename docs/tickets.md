@@ -22,6 +22,7 @@
   - 11/16 の Kawasemi の設定（spec.md の表）で、角丸だけ `small` と `medium` の2案をテーマエディタで作る
   - それぞれ `show --png` でライト／ダークの見本画像を出し、並べて見てもらう
 - 完了条件: 本人がどちらかを選び、spec.md の「決めていないこと」から消す
+- 結果: small に決めた（2026-11-27）。`--like neutral` で作るため `@astryxdesign/theme-neutral` を devDependencies に足した
 
 ## K3. 土台のテーマ `kawasemi` を作り、見本ページで表示する
 
