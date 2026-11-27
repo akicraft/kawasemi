@@ -81,7 +81,7 @@
   - プルリクエストごとに Biome・型チェック・スクリーンショット比較を回すワークフロー
   - 基準画像を Linux で撮り直してコミットする、手動で動かすワークフロー
 - 完了条件: プルリクエストでワークフローが通り、わざと色を変えたプルリクエストでは失敗する
-- 結果（2026-11-27）: ワークフローを書いた。`check.yml` はプルリクエストと main への push で、`dist/themes/` が最新か・Biome・型チェック（`pnpm typecheck`）・スクリーンショット比較を回し、落ちたら差分の画像を artifact に残す。`update-screenshots.yml` は基準画像を撮り直してブランチにコミットする。`workflow_dispatch` は main にファイルがないと動かせないので、プルリクエストに `update-screenshots` ラベルを付けたときにも動くようにした。GITHUB_TOKEN での push では `check.yml` が走らないので、撮り直したあとは次の push で確認が回る。「わざと色を変えたプルリクエストで失敗する」は、作業ブランチ以外に push しない約束のため試していない（手元では K7 で確かめた）。プルリクエスト（akicraft/kawasemi#1）では、作業環境で撮った基準画像で check が4枚とも落ち（Biome・型チェック・`dist/` の確認は通過）、`update-screenshots` ラベルで撮り直した Linux の画像がブランチに積まれた。`actions/upload-artifact@v4` と `pnpm/action-setup@v4` に Node.js 20 の非推奨の警告が出ている
+- 結果（2026-11-27）: ワークフローを書いた。`check.yml` はプルリクエストと main への push で、`dist/themes/` が最新か・Biome・型チェック（`pnpm typecheck`）・スクリーンショット比較を回し、落ちたら差分の画像を artifact に残す。`update-screenshots.yml` は基準画像を撮り直してブランチにコミットする。`workflow_dispatch` は main にファイルがないと動かせないので、プルリクエストに `update-screenshots` ラベルを付けたときにも動くようにした。撮り直しのコミット（github-actions[bot] の push）では `check.yml` が承認待ち（action_required）で止まるので、撮り直したあとは次の push で確認を回すか、Actions の画面で承認する。「わざと色を変えたプルリクエストで失敗する」は、作業ブランチ以外に push しない約束のため試していない（手元では K7 で確かめた）。プルリクエスト（akicraft/kawasemi#1）では、作業環境で撮った基準画像で check が4枚とも落ち（Biome・型チェック・`dist/` の確認は通過）、`update-screenshots` ラベルで撮り直した Linux の画像がブランチに積まれた。`actions/upload-artifact@v4` と `pnpm/action-setup@v4` に Node.js 20 の非推奨の警告が出ている
 
 ## K9. エージェント向けの説明書と README を書く
 
