@@ -52,19 +52,37 @@ akicraft/playground の `docs/tech-stack-muzaru.md` に合わせる。kawasemi �
   CSS 変数の上書きだけでは、ホバー・薄い背景・ダークモードの色とコントラストの確認が漏れるため
 - 最初のリリースに入れるテーマ:
   - `kawasemi`（土台。アクセントはカワセミの青）
-  - `a2ui-mini`（アクセントは製本クロスのような深い緑。具体的な色は作るときにコントラストの確認を通して決める）
+  - `a2ui-mini`（アクセントは製本クロスのような深い緑 `#2f5d46`。K6 で決めた）
+- 土台と同じ設定でアクセント色だけ変えたテーマは `pnpm new-theme <名前> <色>`（`scripts/new-theme.mjs`）で作る。
+  エディタの `new --like` は組み込みテーマしか受けないため、`themes/kawasemi/kawasemi.settings.json` を読んで同じ設定をエディタに渡し直す
+
+#### a2ui-mini の色（K6）
+
+| 役割                   | ライト                  | ダーク    |
+| ---------------------- | ----------------------- | --------- |
+| `--color-accent`       | `#2f5d46`（指定どおり） | `#78bd99` |
+| `--color-text-accent`  | `#2f5d46`               | `#a0d5b8` |
+| `--color-on-accent`    | `#ffffff`               | `#12110e` |
+| `--color-accent-muted` | `#aee3c6`               | `#005536` |
+
+- 理由: 製本クロスのような、黒に寄せすぎない青みの深い緑。白い文字が 7.6:1 で読め、ライトでは指定した色をそのまま塗りにも文字にも使える
+- ダークではエディタが明るい段（70）に動かした（指定の色は暗い背景に対して 2.02:1 で、塗りに要る 3:1 に届かない）。黒い文字が 8.6:1 で読める
+- エディタのコントラストの確認で、このテーマが起こした問題はなし
 
 ### ダークモード
 
 - OS の設定（`prefers-color-scheme`）に連動するのが基本
-- `<html data-color-scheme="light|dark">` で強制的に上書きできるよう、テーマと Tailwind 用の CSS の両方で受ける
+- 上書きは Astryx のしくみにそろえる。`<Theme mode="light|dark|system">` が `<html data-theme="light|dark">` を付け外しし、テーマの CSS はこの属性で色を切り替える（K5 で決めた。独自の `data-color-scheme` は作らない）。SSR では `<html data-theme="dark">` を直接書いてもよい
+- Tailwind の色のクラスはトークンを参照しているので、そのまま切り替わる。`dark:` 修飾子は `kawasemi/tailwind.css` の `@custom-variant` で、`data-theme` があればそれに、なければ OS の設定に従う
 - 切り替えボタンの部品は作らない（必要になったら自作部品の決まりで足す）
 
 ### Tailwind
 
 - Tailwind v4 用の CSS（`kawasemi/tailwind.css`）を同梱する
 - `@theme` で Astryx のトークン（CSS 変数）を `var(--…)` で参照する。値を2か所に書かない
-- プロジェクトごとのテーマやダークモードの切り替えが、Tailwind のクラス（`bg-accent` など）にも自動で反映されること
+- プロジェクトごとのテーマやダークモードの切り替えが、Tailwind のクラス（`bg-accent-bg` など）にも自動で反映されること
+- 色・余白・角丸・大きさの段は Astryx 同梱の `@astryxdesign/core/tailwind-theme.css` をそのまま使い、Tailwind 既定の色は消す（`bg-blue-500` などは使えない）
+- 文字の大きさは Astryx の段に従う（`text-base` が 14px、`text-sm` が 12px で、Tailwind の既定と1段ずれる）。行の高さも Astryx にそろえ、`text-heading-1`〜`6`・`text-large`・`text-label`・`text-supporting` の役割の名前でも書ける（K4 で `dist/tailwind-text.css` に足した）
 
 ### フォント
 
@@ -75,7 +93,10 @@ akicraft/playground の `docs/tech-stack-muzaru.md` に合わせる。kawasemi �
 
 - `AGENTS.md` をパッケージに同梱する。書く内容:
   - テーマの読み込み方（どの CSS を import するか）
-  - まず Astryx の部品を使う。部品の使い方は写さず `astryx how <部品名>` で引く
+  - まず Astryx の部品を使う。部品の使い方は写さず `astryx search <やりたいこと>` と `astryx component <部品名>` で引く（K9 で、0.7.16 の CLI に `how` がないことが分かり直した）
+  - Astryx の日本語の文言を出す（`InternationalizationProvider locale="ja-JP"` と `@astryxdesign/core/locales/ja-JP.generated.js`）
+  - Tailwind では既定の色が消してあり、トークンの名前で書く
+  - ダークモードの切り替え方（`<Theme mode>`）
   - 色・余白・角丸は直接書かず、トークンか Tailwind のクラスを使う
   - フォントの読み込みは書かない（kawasemi が入れる）
   - 自作部品の決まり
@@ -131,10 +152,11 @@ akicraft/playground の `docs/tech-stack-muzaru.md` に合わせる。kawasemi �
 ## 確認
 
 - **見本ページ**: リポジトリ内に Vite＋React の小さなページを置く。使う側と同じ読み込み方（テーマ・Tailwind 用の CSS・フォント）で、Astryx の主な部品と Tailwind のクラスを並べる。テーマとライト／ダークを切り替えられる
-- **スクリーンショット比較**: Playwright で「テーマ × ライト／ダーク」ごとに撮って前回と比べる
+- **スクリーンショット比較**: Playwright で「テーマ × ライト／ダーク」ごとに撮って前回と比べる（`pnpm test`）。色の差の許容は 0（色の小さな調整も見逃さないため。K7 で決めた）
 - **テーマを作るとき**: テーマエディタのコントラストの確認と `show --png` の見本画像
 - **GitHub Actions**: プルリクエストごとに Biome・型チェック・スクリーンショット比較を回す。
   基準画像は Linux（GitHub Actions）で作ってコミットし、更新は手動で動かす専用のワークフローで撮り直す
+  （`.github/workflows/update-screenshots.yml`。プルリクエストに `update-screenshots` ラベルを付けるか、Actions の画面で Run workflow）
 
 ## リポジトリの構成（案）
 
@@ -160,7 +182,7 @@ kawasemi/
 
 ## 決めていないこと（実装中に決める）
 
-- a2ui-mini 用の深い緑の具体的な色
+- なし（a2ui-mini の緑は K6 で `#2f5d46` に決めた）
 
 ## やらないこと
 

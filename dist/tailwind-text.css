@@ -1,0 +1,45 @@
+/*
+ * kawasemi/tailwind.css から読み込む。文字の大きさに Astryx の行の高さと太さをそろえる。
+ *
+ * Astryx の tailwind-theme.css は text-sm などの大きさだけを Astryx に向け、行の高さは
+ * Tailwind の既定のまま。Astryx の部品と並べると行の高さがずれるので、ここで補う。
+ * Astryx の大きさの名前は Tailwind と1段ずれている（base が 14px、sm が 12px）。
+ */
+@theme reference inline {
+	/* 大きさの段ごとの行の高さ（Astryx の Text と同じ） */
+	--text-xs--line-height: var(--text-heading-6-leading);
+	--text-sm--line-height: var(--text-supporting-leading);
+	--text-base--line-height: var(--text-body-leading);
+	--text-lg--line-height: var(--text-large-leading);
+	--text-xl--line-height: var(--text-heading-2-leading);
+	--text-2xl--line-height: var(--text-heading-1-leading);
+
+	/* 役割の名前で書くための文字（大きさ・行の高さ・太さをまとめて付ける） */
+	--text-heading-1: var(--text-heading-1-size);
+	--text-heading-1--line-height: var(--text-heading-1-leading);
+	--text-heading-1--font-weight: var(--text-heading-1-weight);
+	--text-heading-2: var(--text-heading-2-size);
+	--text-heading-2--line-height: var(--text-heading-2-leading);
+	--text-heading-2--font-weight: var(--text-heading-2-weight);
+	--text-heading-3: var(--text-heading-3-size);
+	--text-heading-3--line-height: var(--text-heading-3-leading);
+	--text-heading-3--font-weight: var(--text-heading-3-weight);
+	--text-heading-4: var(--text-heading-4-size);
+	--text-heading-4--line-height: var(--text-heading-4-leading);
+	--text-heading-4--font-weight: var(--text-heading-4-weight);
+	--text-heading-5: var(--text-heading-5-size);
+	--text-heading-5--line-height: var(--text-heading-5-leading);
+	--text-heading-5--font-weight: var(--text-heading-5-weight);
+	--text-heading-6: var(--text-heading-6-size);
+	--text-heading-6--line-height: var(--text-heading-6-leading);
+	--text-heading-6--font-weight: var(--text-heading-6-weight);
+	--text-large: var(--text-large-size);
+	--text-large--line-height: var(--text-large-leading);
+	--text-large--font-weight: var(--text-large-weight);
+	--text-label: var(--text-label-size);
+	--text-label--line-height: var(--text-label-leading);
+	--text-label--font-weight: var(--text-label-weight);
+	--text-supporting: var(--text-supporting-size);
+	--text-supporting--line-height: var(--text-supporting-leading);
+	--text-supporting--font-weight: var(--text-supporting-weight);
+}

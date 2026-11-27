@@ -310,6 +310,13 @@ function WithTailwind() {
 			<Text type="supporting" display="block">
 				左が Astryx の部品、右が Tailwind のクラスだけで書いたもの。
 			</Text>
+			<p className="text-supporting text-secondary">
+				Tailwind の dark: 修飾子:{" "}
+				<span className="font-medium text-primary dark:hidden">ライト</span>
+				<span className="hidden font-medium text-primary dark:inline">
+					ダーク
+				</span>
+			</p>
 			<HStack gap={4} vAlign="stretch">
 				<Card width={320}>
 					<VStack gap={2}>
@@ -321,19 +328,19 @@ function WithTailwind() {
 						</HStack>
 					</VStack>
 				</Card>
-				<div className="flex w-80 flex-col gap-2 rounded-lg border border-border bg-card p-4">
-					<h3 className="font-heading text-lg font-bold text-primary">
+				<div className="flex w-80 flex-col gap-2 rounded-lg border border-border bg-card p-3">
+					<h3 className="font-heading text-heading-3 text-primary">
 						山田 花子 さま
 					</h3>
-					<p className="text-sm text-secondary">12/3（水）18:00・2名</p>
+					<p className="text-supporting text-secondary">12/3（水）18:00・2名</p>
 					<div className="flex items-center gap-2">
 						<button
 							type="button"
-							className="rounded-md bg-accent-bg px-3 py-1 text-sm font-medium text-on-accent"
+							className="h-(--size-element-sm) rounded-md bg-accent-bg px-3 text-label text-on-accent"
 						>
 							確定する
 						</button>
-						<span className="rounded-full bg-success px-2 text-xs font-medium text-on-success">
+						<span className="rounded-full bg-success px-2 text-sm font-medium text-on-success">
 							確定
 						</span>
 					</div>

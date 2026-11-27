@@ -25,8 +25,12 @@
 	},
 	"scripts": {
 		"build": "node scripts/build.mjs",
+		"new-theme": "node scripts/new-theme.mjs",
 		"check": "biome check .",
-		"format": "biome check --write ."
+		"format": "biome check --write .",
+		"typecheck": "pnpm --filter kawasemi-preview exec tsc --noEmit",
+		"test": "playwright test",
+		"test:update": "playwright test --update-snapshots"
 	},
 	"dependencies": {
 		"@fontsource-variable/noto-sans-jp": "5.3.1"

@@ -43,6 +43,7 @@
   - `dist/tailwind.css` に Tailwind v4 の `@theme` を書き、Astryx のトークンを `var(--…)` で参照する（色・文字・余白・角丸）
   - 見本ページに Tailwind のクラスで書いた部分を足し、Astryx の部品と並べる
 - 完了条件: 見本ページで、Tailwind で書いた部分と Astryx の部品の色・角丸・文字がそろっている
+- 結果（2026-11-27）: 完了。ライト／ダークのスクリーンショットと計算後のスタイルで比べ、色・角丸・字体はそろっていた。ずれていたのは文字で、Astryx の `tailwind-theme.css` は `text-sm` などの大きさしか Astryx に向けず、行の高さは Tailwind の既定のままだった。`dist/tailwind-text.css` を足し、大きさの段ごとの行の高さを Astryx にそろえ、`text-heading-3`・`text-label`・`text-supporting` など役割の名前で大きさ・行の高さ・太さをまとめて付けられるようにした。見本ページのクラス名も、Astryx の大きさの段（`text-base` が 14px、`text-sm` が 12px）に合わせて直した。残る差はカードの内側の余白の 1px（Astryx は枠線の分を引いて 11px、Tailwind の `p-3` は 12px）で、そのままにした
 
 ## K5. ダークモードの上書きを受ける
 
@@ -51,6 +52,7 @@
   - `data-color-scheme="light|dark"` で OS の設定を上書きできるよう、テーマと `tailwind.css` の両方で受ける
   - 見本ページに「OS に従う／ライト／ダーク」の切り替えを付ける（見本ページ専用。部品としては配らない）
 - 完了条件: OS がライトのままでも、属性で Astryx の部品と Tailwind の部分の両方がダークになる
+- 結果（2026-11-27）: 完了。独自の `data-color-scheme` はやめ、Astryx の `<Theme mode>` が付ける `html[data-theme]` にそろえた（テーマの CSS はもともとこの属性で切り替わる）。`dist/tailwind.css` に `@custom-variant dark` を足し、`dark:` が `data-theme` と OS の設定の両方に従うようにした。切り替えは K3 で付けた見本ページの `SegmentedControl` と `?mode=` をそのまま使う。OS がライト／ダーク × `?mode=` なし／light／dark／system の8通りで、Astryx のボタン・Tailwind のカードの背景・`dark:` の表示が、どれも期待どおりに切り替わることを確かめた
 
 ## K6. a2ui-mini 用のテーマを作る
 
@@ -61,6 +63,7 @@
   - 見本ページでテーマを切り替えられるようにする
   - プロジェクトごとのテーマの作り方の手順を README に書く
 - 完了条件: 見本ページで `kawasemi` と `a2ui-mini` を切り替えられ、ライト／ダークの両方で Tailwind の部分のアクセント色も変わる
+- 結果（2026-11-27）: 完了。アクセントは `#2f5d46`（理由と生成された色は spec.md の「a2ui-mini の色」）。エディタの `new --like` は組み込みテーマしか受けず `--like kawasemi` は使えなかったので、kawasemi の設定を読んで同じ設定で `new` と `set` を呼ぶ `pnpm new-theme`（`scripts/new-theme.mjs`）を足した。作ったテーマの設定は、アクセント色以外 kawasemi と同じことを差分で確かめた。見本ページで2つのテーマ × ライト／ダークを撮り、Astryx のボタンと Tailwind のボタンの背景が4通りとも同じ色で切り替わることを確かめた。エディタが書く `themes/*/sheet.html` は `.gitignore` に足した
 
 ## K7. スクリーンショット比較を入れる
 
@@ -69,6 +72,7 @@
   - Playwright で「テーマ（2つ）× ライト／ダーク」の4枚を撮って比べるテストを書く
   - 手元（Mac）で回せるようにする（基準画像は K8 で Linux のものに置き換える）
 - 完了条件: `pnpm test` で4枚の比較が通り、テーマの色を1つ変えると失敗する
+- 結果（2026-11-27）: 完了。`tests/screenshots.spec.ts` が見本ページを `?theme=` と `?mode=` で開いて全体を撮る（OS の設定はライトに固定し、ダークは `data-theme` で切り替える）。`playwright.config.ts` の `webServer` で見本ページをビルドして `vite preview` で出す。基準画像は `tests/screenshots/<テーマ>-<モード>-<OS>.png`。色の差の許容は 0 にした（既定の 0.2 や 0.02 では、エディタで a2ui-mini のアクセントを `#2f5d46` → `#2f6046` にしても通った。0 では a2ui-mini の2枚が約 15,000 画素の差で落ち、戻すと通った）。同じ環境で3回続けて回して安定していた。今コミットした基準画像はこの作業環境（Linux、Playwright 1.63 付属の Chromium）で撮ったもので、K8 の手動ワークフローで GitHub Actions の Linux のものに撮り直す。Playwright の版と合うブラウザがない環境では `PW_CHROMIUM_PATH` でブラウザの場所を渡せる。Mac では基準画像がないので、手元で回すときは `pnpm test:update` で `-darwin` の画像を作る（コミットはしない）
 
 ## K8. GitHub Actions で確認を回す
 
@@ -77,6 +81,7 @@
   - プルリクエストごとに Biome・型チェック・スクリーンショット比較を回すワークフロー
   - 基準画像を Linux で撮り直してコミットする、手動で動かすワークフロー
 - 完了条件: プルリクエストでワークフローが通り、わざと色を変えたプルリクエストでは失敗する
+- 結果（2026-11-27）: ワークフローを書いた。`check.yml` はプルリクエストと main への push で、`dist/themes/` が最新か・Biome・型チェック（`pnpm typecheck`）・スクリーンショット比較を回し、落ちたら差分の画像を artifact に残す。`update-screenshots.yml` は基準画像を撮り直してブランチにコミットする。`workflow_dispatch` は main にファイルがないと動かせないので、プルリクエストに `update-screenshots` ラベルを付けたときにも動くようにした。撮り直しのコミット（github-actions[bot] の push）では `check.yml` が承認待ち（action_required）で止まるので、撮り直したあとは次の push で確認を回すか、Actions の画面で承認する。「わざと色を変えたプルリクエストで失敗する」は、作業ブランチ以外に push しない約束のため試していない（手元では K7 で確かめた）。プルリクエスト（akicraft/kawasemi#1）では、作業環境で撮った基準画像で check が4枚とも落ち（Biome・型チェック・`dist/` の確認は通過）、`update-screenshots` ラベルで撮り直した Linux の画像がブランチに積まれた。`actions/upload-artifact@v4` と `pnpm/action-setup@v4` に Node.js 20 の非推奨の警告が出ている
 
 ## K9. エージェント向けの説明書と README を書く
 
@@ -85,6 +90,7 @@
   - `AGENTS.md`（spec.md の「エージェント向けの説明書」の内容）。`package.json` の `files` に含める
   - README: 目的、入れ方（`pnpm add github:akicraft/kawasemi#<タグ>`）、読み込み方、テーマの作り方、バージョンの付け方
 - 完了条件: 空の Void プロジェクトに入れて、Claude に「設定画面を作って」と頼むと、`AGENTS.md` を読んで Astryx の部品とトークンで組む
+- 結果（2026-11-27）: `AGENTS.md` と README を書いた。完了条件の「空の Void プロジェクトで試す」はまだ（タグがなく `github:` で入れられないため。v0.1.0 のあとに本人が試す）。spec の「`astryx how <部品名>` で引く」は、0.7.16 の CLI に `how` がなかったので `astryx search` と `astryx component <部品名>` に直した（`how` はテーマエディタの中にだけある）。アプリ側には CLI がないことが多いので、`@astryxdesign/cli` を devDependencies に入れるよう書いた
 
 ## K10. v0.1.0 を出し、a2ui-mini で使う
 

@@ -1,0 +1,75 @@
+{
+  "name": "a2ui-mini",
+  "like": "neutral",
+  "mode": "both",
+  "settings": [
+    {
+      "thing": "corners",
+      "value": "small",
+      "source": "dial"
+    },
+    {
+      "thing": "accent",
+      "value": "#2f5d46",
+      "source": "dial"
+    },
+    {
+      "thing": "neutral",
+      "value": "#78736b",
+      "source": "dial"
+    },
+    {
+      "thing": "vibrancy",
+      "value": "60",
+      "source": "dial"
+    },
+    {
+      "thing": "font",
+      "value": "\"Noto Sans JP Variable\", \"Noto Sans JP\", system-ui, sans-serif",
+      "source": "dial"
+    },
+    {
+      "thing": "headings",
+      "value": "heavy",
+      "source": "dial",
+      "axis": "weight"
+    },
+    {
+      "thing": "surfaces",
+      "value": "outlined",
+      "source": "dial"
+    },
+    {
+      "thing": "buttons",
+      "value": "solid",
+      "source": "dial"
+    },
+    {
+      "thing": "--color-data-categorical-blue",
+      "value": "#1670a8",
+      "source": "token"
+    },
+    {
+      "thing": "--color-data-categorical-orange",
+      "value": "#d0632b",
+      "source": "token"
+    },
+    {
+      "thing": "--color-data-categorical-green",
+      "value": "#6a8f3a",
+      "source": "token"
+    },
+    {
+      "thing": "--color-data-categorical-purple",
+      "value": "#8a4f7d",
+      "source": "token"
+    },
+    {
+      "thing": "--color-data-neutral",
+      "value": "#a39d93",
+      "source": "token"
+    }
+  ],
+  "palette": "a20236dcf3e47cf0e96e30d6a8d1cf100afd1cd1e1e76c4230e144098ab8c24a",
+  "lifted": []
+}
