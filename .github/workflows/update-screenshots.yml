@@ -1,0 +1,58 @@
+# 基準画像（tests/screenshots/*-linux.png）を GitHub Actions の Linux で撮り直し、
+# ブランチにコミットする。手動でだけ動かす:
+# - プルリクエストに `update-screenshots` ラベルを付ける（そのプルリクエストのブランチに積む。
+#   もう一度撮るときは、ラベルを外して付け直す）
+# - または Actions の画面で Run workflow（動かしたブランチに積む。main にこのファイルがあるときだけ使える）
+name: update-screenshots
+
+on:
+  pull_request:
+    types: [labeled]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-screenshots-${{ github.head_ref || github.ref }}
+
+jobs:
+  update:
+    # フォークからのプルリクエストには書き込めないので、このリポジトリのブランチだけ
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.label.name == 'update-screenshots' &&
+       github.event.pull_request.head.repo.full_name == github.repository)
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          # プルリクエストでは、マージ後の仮のコミットではなくブランチそのものに積む
+          ref: ${{ github.head_ref || github.ref_name }}
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Playwright のブラウザを入れる
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: 基準画像を撮り直す
+        run: pnpm test:update
+
+      - name: 変わった画像をコミットする
+        run: |
+          git add tests/screenshots
+          if git diff --cached --quiet; then
+            echo "基準画像に変化なし"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "基準画像を GitHub Actions の Linux で撮り直す"
+          git push

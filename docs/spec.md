@@ -153,6 +153,7 @@ akicraft/playground の `docs/tech-stack-muzaru.md` に合わせる。kawasemi �
 - **テーマを作るとき**: テーマエディタのコントラストの確認と `show --png` の見本画像
 - **GitHub Actions**: プルリクエストごとに Biome・型チェック・スクリーンショット比較を回す。
   基準画像は Linux（GitHub Actions）で作ってコミットし、更新は手動で動かす専用のワークフローで撮り直す
+  （`.github/workflows/update-screenshots.yml`。プルリクエストに `update-screenshots` ラベルを付けるか、Actions の画面で Run workflow）
 
 ## リポジトリの構成（案）
 
