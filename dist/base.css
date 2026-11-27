@@ -1,0 +1,8 @@
+/*
+ * kawasemi の土台。アプリで最初に1回だけ読み込む。
+ * Astryx のリセットと部品の CSS、同梱の Noto Sans JP（可変フォント）が入る。
+ * テーマは別に読み込む: @import "kawasemi/themes/<名前>.css";
+ */
+@import "@astryxdesign/core/reset.css";
+@import "@astryxdesign/core/astryx.css";
+@import "@fontsource-variable/noto-sans-jp/wght.css";

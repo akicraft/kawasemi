@@ -3,7 +3,7 @@
 個人開発で使い回すデザインシステム。Meta の Astryx をベースに、テーマ（トークン）を中心に持つ。
 
 - 作成日: 2026-11-27
-- 状態: 合意済み・K3 から実施
+- 状態: 合意済み・K4 から実施
 - リポジトリ: `akicraft/kawasemi`
 
 ## 背景
@@ -106,11 +106,24 @@ akicraft/playground の `docs/tech-stack-muzaru.md` に合わせる。kawasemi �
   （`astryx theme add` が出すテーマの CSS / JS、自作部品をビルドした JS と型定義）
 - 依存の持ち方:
 
-  | パッケージ                                      | 種類                                        | 理由                                                                   |
-  | ----------------------------------------------- | ------------------------------------------- | ---------------------------------------------------------------------- |
-  | `@astryxdesign/core`                            | peerDependencies（狭い範囲、例: `~0.7.17`） | アプリが直接 import する。アプリの中で1つに保つ                        |
-  | `@fontsource-variable/noto-sans-jp`             | dependencies                                | アプリは直接触らない                                                   |
-  | `@astryxdesign/cli` / `build` / `theme-neutral` | devDependencies                             | テーマを作るときだけ使う（`theme-neutral` は `--like neutral` の土台） |
+  | パッケージ                          | 種類                                        | 理由                                                                                                                                                                      |
+  | ----------------------------------- | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+  | `@astryxdesign/core`                | peerDependencies（狭い範囲、例: `~0.7.16`） | アプリが直接 import する。アプリの中で1つに保つ                                                                                                                           |
+  | `@astryxdesign/theme-neutral`       | peerDependencies（core と同じ範囲）         | テーマの JS がアイコンを neutral から借りる（`@astryxdesign/theme-neutral/built` を import する）ため、実行時にも要る。テーマを作るときの `--like neutral` の土台でもある |
+  | `@fontsource-variable/noto-sans-jp` | dependencies                                | アプリは直接触らない                                                                                                                                                      |
+  | `@astryxdesign/cli` / `build`       | devDependencies                             | テーマを作るときだけ使う                                                                                                                                                  |
+
+- `package.json` の `exports`（K3 で決めた）:
+
+  | 読み込むもの                 | 中身                                                               |
+  | ---------------------------- | ------------------------------------------------------------------ |
+  | `kawasemi/base.css`          | Astryx の reset.css・astryx.css と Noto Sans JP。アプリで最初に1回 |
+  | `kawasemi/themes/<名前>.css` | テーマの CSS                                                       |
+  | `kawasemi/themes/<名前>`     | テーマの JS（`<Theme theme={...}>` に渡す）                        |
+  | `kawasemi/tailwind.css`      | Tailwind 用（K4）                                                  |
+  | `kawasemi/AGENTS.md`         | エージェント向けの説明書（K9）                                     |
+
+- テーマのフォントは `"Noto Sans JP Variable", "Noto Sans JP", system-ui, sans-serif`（同梱の可変フォントの名前が `Noto Sans JP Variable` のため）
 
 - Astryx を上げるときは、見本ページの比較を通してから peerDependencies の範囲を広げる
 - 依存はどれも npm の7日ルールに沿って、公開から7日以上たった版を入れる
@@ -131,7 +144,7 @@ kawasemi/
 ├── CLAUDE.md              # kawasemi 自体を開発するときのルール
 ├── README.md
 ├── LICENSE                # MIT
-├── package.json           # exports: ./tailwind.css, ./themes/*.css, ./fonts.css など
+├── package.json           # exports: ./base.css, ./themes/*.css, ./themes/*, ./tailwind.css
 ├── mise.toml              # node / pnpm のバージョン固定
 ├── biome.json
 ├── themes/                # テーマエディタが管理する設定と見本画像（手で編集しない）
@@ -148,7 +161,6 @@ kawasemi/
 ## 決めていないこと（実装中に決める）
 
 - a2ui-mini 用の深い緑の具体的な色
-- `package.json` の `exports` の細かい名前
 
 ## やらないこと
 

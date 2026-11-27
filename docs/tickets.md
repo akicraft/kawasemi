@@ -34,6 +34,7 @@
   - `package.json` の `exports` を決める
   - `preview/` に Vite＋React の見本ページを作り、**使う側と同じ import のしかたで** kawasemi を読み込んで Astryx の主な部品（ボタン、入力欄、カード、チップ、表など）を並べる
 - 完了条件: 見本ページが Noto Sans JP と kawasemi のテーマで表示され、外部のフォントサーバーへのリクエストがない
+- 結果（2026-11-27）: 完了。`astryx theme add` は使わず、エディタが書く `src/themes/` を `pnpm build` で `dist/themes/` にコピーする形にした。見本ページは pnpm workspace の `preview/` で、`kawasemi: workspace:*` として読み込む。Astryx の日本語の文言（`InternationalizationProvider` と `ja-JP`）も使う
 
 ## K4. Tailwind 用の CSS を同梱する
 

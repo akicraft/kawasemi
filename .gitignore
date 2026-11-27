@@ -4,3 +4,8 @@ node_modules/
 # Playwright の作業用（基準画像は tests/ の中にコミットする）
 test-results/
 playwright-report/
+.pnpm-store/
+.playwright/
+preview/dist/
+# テーマエディタが毎回作り直す見本ページ（大きいので入れない）
+themes/*/preview.html

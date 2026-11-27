@@ -12,19 +12,35 @@
 		"dist",
 		"AGENTS.md"
 	],
+	"exports": {
+		"./base.css": "./dist/base.css",
+		"./themes/*.css": "./dist/themes/*/*.css",
+		"./themes/*": {
+			"types": "./dist/themes/*/*.d.ts",
+			"default": "./dist/themes/*/*.js"
+		},
+		"./AGENTS.md": "./AGENTS.md",
+		"./package.json": "./package.json"
+	},
 	"scripts": {
+		"build": "node scripts/build.mjs",
 		"check": "biome check .",
 		"format": "biome check --write ."
 	},
+	"dependencies": {
+		"@fontsource-variable/noto-sans-jp": "5.3.1"
+	},
 	"peerDependencies": {
-		"@astryxdesign/core": "~0.7.16"
+		"@astryxdesign/core": "~0.7.16",
+		"@astryxdesign/theme-neutral": "~0.7.16"
 	},
 	"devDependencies": {
 		"@astryxdesign/build": "0.7.16",
 		"@astryxdesign/cli": "0.7.16",
 		"@astryxdesign/core": "0.7.16",
 		"@astryxdesign/theme-neutral": "0.7.16",
-		"@biomejs/biome": "2.6.8"
+		"@biomejs/biome": "2.6.8",
+		"@playwright/test": "1.65.1"
 	},
 	"packageManager": "pnpm@12.11.0",
 	"engines": {

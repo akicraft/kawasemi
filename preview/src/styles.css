@@ -1,0 +1,3 @@
+/* 使う側と同じ読み込み方: 土台 → テーマ */
+@import "kawasemi/base.css";
+@import "kawasemi/themes/kawasemi.css";
