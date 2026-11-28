@@ -1,0 +1,86 @@
+{
+	"kawasemi": "0.1.1",
+	"astryx": "~0.7.16",
+	"themes": {
+		"a2ui-mini": {
+			"theme": "a2ui-mini",
+			"tag": "v0.1.1",
+			"install": {
+				"pnpmWorkspace": {
+					"file": "pnpm-workspace.yaml",
+					"note": "Astryx のインストール時スクリプトを走らせない。書かないと pnpm がインストールを止める。astryx init は実行しない",
+					"allowBuilds": {
+						"@astryxdesign/core": false,
+						"@astryxdesign/cli": false
+					},
+					"yaml": "allowBuilds:\n  \"@astryxdesign/core\": false\n  \"@astryxdesign/cli\": false\n"
+				},
+				"commands": [
+					"pnpm add github:akicraft/kawasemi#v0.1.1",
+					"pnpm add @astryxdesign/core@~0.7.16 @astryxdesign/theme-neutral@~0.7.16 @stylexjs/stylex react react-dom",
+					"pnpm add -D @astryxdesign/cli@~0.7.16"
+				],
+				"tailwind": {
+					"note": "Tailwind を使うときだけ（v4.3 以上）。vite.config.ts の plugins に足す",
+					"commands": [
+						"pnpm add -D tailwindcss @tailwindcss/vite"
+					],
+					"viteConfig": "import tailwindcss from \"@tailwindcss/vite\";\n\nexport default defineConfig({\n\tplugins: [tailwindcss() /* , ほかのプラグイン */],\n});\n"
+				}
+			},
+			"css": {
+				"note": "アプリの入口の CSS。テーマはプロジェクトで使う1つだけ。フォント（Noto Sans JP）は kawasemi の CSS が読み込むので <link> や @font-face を書かない",
+				"tailwind": "@import \"kawasemi/tailwind.css\";\n@import \"kawasemi/themes/a2ui-mini.css\";\n",
+				"plain": "@import \"kawasemi/base.css\";\n@import \"kawasemi/themes/a2ui-mini.css\";\n"
+			},
+			"root": {
+				"note": "アプリの一番外側。InternationalizationProvider を外すと部品の中の文言が英語になる。ダークモードは mode=\"light\" | \"dark\" | \"system\"",
+				"code": "import { InternationalizationProvider } from \"@astryxdesign/core/i18n\";\nimport jaJP from \"@astryxdesign/core/locales/ja-JP.generated.js\";\nimport { Theme } from \"@astryxdesign/core/theme\";\nimport { a2uiMiniTheme } from \"kawasemi/themes/a2ui-mini\";\n\nexport function Root({ children }: { children: React.ReactNode }) {\n\treturn (\n\t\t<InternationalizationProvider locale=\"ja-JP\" messages={{ \"ja-JP\": jaJP }}>\n\t\t\t<Theme theme={a2uiMiniTheme} mode=\"system\">\n\t\t\t\t{children}\n\t\t\t</Theme>\n\t\t</InternationalizationProvider>\n\t);\n}\n"
+			},
+			"agents": {
+				"note": "プロジェクトの CLAUDE.md に足す1行",
+				"line": "UI は `node_modules/kawasemi/AGENTS.md` に従う。"
+			}
+		},
+		"kawasemi": {
+			"theme": "kawasemi",
+			"tag": "v0.1.1",
+			"install": {
+				"pnpmWorkspace": {
+					"file": "pnpm-workspace.yaml",
+					"note": "Astryx のインストール時スクリプトを走らせない。書かないと pnpm がインストールを止める。astryx init は実行しない",
+					"allowBuilds": {
+						"@astryxdesign/core": false,
+						"@astryxdesign/cli": false
+					},
+					"yaml": "allowBuilds:\n  \"@astryxdesign/core\": false\n  \"@astryxdesign/cli\": false\n"
+				},
+				"commands": [
+					"pnpm add github:akicraft/kawasemi#v0.1.1",
+					"pnpm add @astryxdesign/core@~0.7.16 @astryxdesign/theme-neutral@~0.7.16 @stylexjs/stylex react react-dom",
+					"pnpm add -D @astryxdesign/cli@~0.7.16"
+				],
+				"tailwind": {
+					"note": "Tailwind を使うときだけ（v4.3 以上）。vite.config.ts の plugins に足す",
+					"commands": [
+						"pnpm add -D tailwindcss @tailwindcss/vite"
+					],
+					"viteConfig": "import tailwindcss from \"@tailwindcss/vite\";\n\nexport default defineConfig({\n\tplugins: [tailwindcss() /* , ほかのプラグイン */],\n});\n"
+				}
+			},
+			"css": {
+				"note": "アプリの入口の CSS。テーマはプロジェクトで使う1つだけ。フォント（Noto Sans JP）は kawasemi の CSS が読み込むので <link> や @font-face を書かない",
+				"tailwind": "@import \"kawasemi/tailwind.css\";\n@import \"kawasemi/themes/kawasemi.css\";\n",
+				"plain": "@import \"kawasemi/base.css\";\n@import \"kawasemi/themes/kawasemi.css\";\n"
+			},
+			"root": {
+				"note": "アプリの一番外側。InternationalizationProvider を外すと部品の中の文言が英語になる。ダークモードは mode=\"light\" | \"dark\" | \"system\"",
+				"code": "import { InternationalizationProvider } from \"@astryxdesign/core/i18n\";\nimport jaJP from \"@astryxdesign/core/locales/ja-JP.generated.js\";\nimport { Theme } from \"@astryxdesign/core/theme\";\nimport { kawasemiTheme } from \"kawasemi/themes/kawasemi\";\n\nexport function Root({ children }: { children: React.ReactNode }) {\n\treturn (\n\t\t<InternationalizationProvider locale=\"ja-JP\" messages={{ \"ja-JP\": jaJP }}>\n\t\t\t<Theme theme={kawasemiTheme} mode=\"system\">\n\t\t\t\t{children}\n\t\t\t</Theme>\n\t\t</InternationalizationProvider>\n\t);\n}\n"
+			},
+			"agents": {
+				"note": "プロジェクトの CLAUDE.md に足す1行",
+				"line": "UI は `node_modules/kawasemi/AGENTS.md` に従う。"
+			}
+		}
+	}
+}

@@ -1,0 +1,19 @@
+{
+	"kawasemi": "0.1.1",
+	"astryx": {
+		"core": "0.7.16",
+		"cli": "0.7.16",
+		"peerRange": "~0.7.16"
+	},
+	"themes": [
+		"a2ui-mini",
+		"kawasemi"
+	],
+	"files": [
+		"guide.md",
+		"themes.json",
+		"setup.json",
+		"components.json",
+		"meta.json"
+	]
+}

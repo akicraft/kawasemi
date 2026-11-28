@@ -29,7 +29,7 @@ allowBuilds:
 ```
 
 ```sh
-pnpm add github:akicraft/kawasemi#v0.1.0
+pnpm add github:akicraft/kawasemi#v0.1.1
 pnpm add @astryxdesign/core@~0.7.16 @astryxdesign/theme-neutral@~0.7.16 @stylexjs/stylex react react-dom
 pnpm add -D @astryxdesign/cli@~0.7.16   # 部品の使い方を引く CLI（エージェントが使う）
 ```

@@ -143,11 +143,36 @@ akicraft/playground の `docs/tech-stack-muzaru.md` に合わせる。kawasemi �
   | `kawasemi/themes/<名前>`     | テーマの JS（`<Theme theme={...}>` に渡す）                        |
   | `kawasemi/tailwind.css`      | Tailwind 用（K4）                                                  |
   | `kawasemi/AGENTS.md`         | エージェント向けの説明書（K9）                                     |
+  | `kawasemi/mcp/<ファイル>`    | MCP サーバー用のデータ（K11。下の「MCP 用のデータ」）              |
 
 - テーマのフォントは `"Noto Sans JP Variable", "Noto Sans JP", system-ui, sans-serif`（同梱の可変フォントの名前が `Noto Sans JP Variable` のため）
 
 - Astryx を上げるときは、見本ページの比較を通してから peerDependencies の範囲を広げる
 - 依存はどれも npm の7日ルールに沿って、公開から7日以上たった版を入れる
+
+## MCP 用のデータ
+
+個人用の MCP サーバー（akicraft/mcp、Cloudflare Workers）が kawasemi のモジュールとして同梱し、読むだけのツール
+（`kawasemi_guide`・`kawasemi_setup`・`kawasemi_themes`・`kawasemi_tokens`・`kawasemi_search_components`・`kawasemi_component`）で返す。
+サーバーは実行時に外へ通信しないので、ツールがそのまま返せる形で `dist/mcp/` に置く（K11）。
+
+- `pnpm build` の中で `scripts/build-mcp.mjs` が作る。Node の標準モジュールだけで書き、手で編集しない
+- 中身:
+
+  | ファイル          | 中身                                                                                                                                                                                                                                                                       |
+  | ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+  | `guide.md`        | `AGENTS.md` の写し                                                                                                                                                                                                                                                         |
+  | `themes.json`     | テーマごとの名前・アクセント色（`themes/<名前>/<名前>.settings.json` の `accent`）・短い説明・読み込む CSS と JS、`tokens.light` / `tokens.dark` のトークンの値                                                                                                            |
+  | `setup.json`      | テーマごとの入れ方（`pnpm-workspace.yaml` の `allowBuilds`、`pnpm add` のコマンド、Tailwind）・CSS の読み込み・`<Theme>` と `InternationalizationProvider` のコード。README と AGENTS.md の「入れ方」「読み込み方」と同じ内容で、タグは `package.json` の version から作る |
+  | `components.json` | Astryx の全部品。`@astryxdesign/cli` の `astryx component <名前> --json` の出力（見本ページ用の `playground` は除く）に、`summary`（1行の説明）と `importStatement` を足したもの。`index` は検索用の一覧（名前・グループ・分類・import・説明・キーワード）                 |
+  | `meta.json`       | kawasemi の版と Astryx（core・cli・peerDependencies の範囲）の版、テーマの名前                                                                                                                                                                                             |
+
+- トークンの値の読み方:
+  - 対象は `--color-*`・`--radius-*`・`--font-*`・`--text-*`・`--spacing-*`
+  - Astryx の既定値（`@astryxdesign/core/dist/astryx.css` の `:root`）の上に、`dist/themes/<名前>/<名前>.css` のテーマ本体（`@scope` の `:scope`）を重ねる。余白（`--spacing-*`）と文字の太さ（`--font-weight-*`）はテーマが上書きしないので Astryx の既定値になる
+  - `light-dark(a, b)` はライトが a・ダークが b。`var(...)` は解決できるものは解決する（`--_dynamic-type-*` のような未定義の変数は既定の 1 を使う）。rem だけの `calc()` と `min()` は計算する（例: `--font-size-base` は `0.875rem`）。`color-mix()` などはそのまま残す
+  - 含めないもの: 画面が狭くタッチのとき（`@media (width < 1024px) and (pointer: coarse)`）の文字の大きさ、写真の上などの `[data-astryx-media]` の値、影（`--shadow-*`）や動き（`--duration-*`）
+- CI の「`dist/` が最新か」で `dist/mcp/` も確かめる（Astryx を上げると `components.json` が変わる）
 
 ## 確認
 
@@ -175,7 +200,8 @@ kawasemi/
 ├── dist/                  # 配布物（コミットする）
 │   ├── themes/kawasemi.css
 │   ├── themes/a2ui-mini.css
-│   └── tailwind.css
+│   ├── tailwind.css
+│   └── mcp/               # MCP サーバー用のデータ（K11）
 ├── preview/               # 見本ページ（Vite＋React）
 └── tests/                 # Playwright のスクリーンショット比較
 ```
