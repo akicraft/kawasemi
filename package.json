@@ -1,6 +1,6 @@
 {
 	"name": "kawasemi",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "Astryx をベースにした個人開発用のデザインシステム（テーマ中心）",
 	"license": "MIT",
 	"type": "module",
@@ -20,11 +20,12 @@
 			"types": "./dist/themes/*/*.d.ts",
 			"default": "./dist/themes/*/*.js"
 		},
+		"./mcp/*": "./dist/mcp/*",
 		"./AGENTS.md": "./AGENTS.md",
 		"./package.json": "./package.json"
 	},
 	"scripts": {
-		"build": "node scripts/build.mjs",
+		"build": "node scripts/build.mjs && node scripts/build-mcp.mjs",
 		"new-theme": "node scripts/new-theme.mjs",
 		"check": "biome check .",
 		"format": "biome check --write .",

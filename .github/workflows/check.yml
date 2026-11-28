@@ -29,11 +29,13 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
-      # テーマの生成物（src/themes/）と dist/themes/ が食い違っていないか
-      - name: dist/themes/ が最新か
+      # テーマの生成物（src/themes/）・AGENTS.md・Astryx の版と、dist/（themes/ と mcp/）が食い違っていないか。
+      # 新しく増えたファイル（未追跡）も落とす
+      - name: dist/ が最新か
         run: |
           pnpm build
           git diff --exit-code -- dist
+          test -z "$(git status --porcelain -- dist)" || { git status --porcelain -- dist; exit 1; }
 
       - name: Biome
         run: pnpm check

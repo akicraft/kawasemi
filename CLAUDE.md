@@ -7,7 +7,7 @@ Astryx をベースにした個人開発用のデザインシステム。仕様�
 ## 守ること
 
 - テーマは Astryx のテーマエディタ（`pnpm exec astryx experimental theme editor ...`）で作る。生成物（`themes/`・`src/themes/`・`dist/themes/`）は手で編集しない
-- テーマを変えたら `pnpm build` で `dist/themes/` を作り直し、一緒にコミットする
+- テーマを変えたら `pnpm build` で `dist/themes/` と `dist/mcp/` を作り直し、一緒にコミットする。Astryx の版や `AGENTS.md` を変えたときも同じ
 - 色や数値は、Tailwind 用の CSS でも見本ページでも直接書かず、Astryx のトークン（CSS 変数）を参照する
 - `dist/` の生成物はコミットする（Git から入れるパッケージでは、pnpm がビルドスクリプトを走らせないため）
 - 依存は npm の7日ルールに沿って、公開から7日以上たった版を入れる
@@ -19,7 +19,7 @@ Astryx をベースにした個人開発用のデザインシステム。仕様�
 
 ```sh
 pnpm install
-pnpm build     # src/themes/（エディタの生成物）を dist/themes/ にコピー。テーマを変えたら必ず実行
+pnpm build     # src/themes/（エディタの生成物）を dist/themes/ にコピーし、MCP 用のデータ dist/mcp/ を作る。テーマを変えたら必ず実行
 pnpm check     # Biome
 pnpm format    # Biome で整形
 pnpm --filter kawasemi-preview dev   # 見本ページ（http://localhost:5199）

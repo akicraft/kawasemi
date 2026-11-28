@@ -104,3 +104,12 @@
   - a2ui-mini の `globals.css` の独自の色指定をやめる
 - 完了条件: a2ui-mini の予約フォームが kawasemi（深い緑）の見た目で表示され、ライト／ダークも切り替わる
 - 結果（2026-11-28）: 完了。`v0.1.0` のタグを push し、a2ui-mini（akicraft/playground の `a2ui-mini` ブランチ、b82c9c6）に入れた。予約フォーム → 予約 → 確認のカードまで、ライト／ダークの両方で深い緑の見た目になることを確かめた。`--a2ui-*` に写す CSS は a2ui-mini の `app/a2ui-kawasemi.css`。分かったこと: A2UI は Shadow DOM を使わないので、Astryx のリセットが A2UI の中の `<p>` に本文の色を付け、ボタンの白い文字が暗くなる（`color: inherit` で直した）。`kawasemi/a2ui.css` に移すときもこの対策を入れる
+
+## K11. MCP 用のデータを作る
+
+- 依存: K10
+- やること:
+  - `pnpm build` で、MCP サーバー（akicraft/mcp）に同梱するデータ `dist/mcp/` を作る（`guide.md`・`themes.json`・`setup.json`・`components.json`・`meta.json`。spec.md の「MCP 用のデータ」）
+  - `package.json` の `exports` に `./mcp/*` を足し、version を 0.1.1 にする
+- 完了条件: `pnpm build`・`pnpm check`・`pnpm typecheck` が通り、`dist/mcp/` の5つのファイルができる。`themes.json` のライトの `--color-accent` が a2ui-mini で `#2f5d46`、kawasemi で `#1670a8`
+- 結果（2026-11-28）: `scripts/build-mcp.mjs`（Node の標準モジュールだけ）を足し、`pnpm build` から `scripts/build.mjs` のあとに呼ぶようにした。完了条件はすべて確かめた（ライトの `--color-accent` は a2ui-mini が `#2f5d46`、kawasemi が `#1670a8`。ダークは `#78bd99` と `#54b4f9`）。2回続けてビルドして同じ出力になる。トークンはテーマあたり 256 個で、`var(...)` や `light-dark()` が残るものはない。テーマの CSS には余白と文字の太さがないので、Astryx の `astryx.css` の `:root` を既定値として重ねた。文字の大きさは `min(calc(0.875rem * var(--_dynamic-type-body, 1)), ...)` の形なので、未定義の変数を既定の 1 として計算した。部品は CLI の `component --list --json` で一覧を取り、`component <名前...> --json`（1回に100個まで）で 174 個の説明を取った。`--dense` は Markdown の文章で props が表になるため、引きやすい `--json` にした。`components.json` は約 1.2MB（gzip で約 260KB）。CI の「`dist/` が最新か」は `git diff` だけでは新しいファイルを見落とすので、`git status --porcelain` の確認も足した。README の入れ方のタグを `v0.1.1` にした。タグ（v0.1.1）はまだ打っていない（本人が確認してから）
